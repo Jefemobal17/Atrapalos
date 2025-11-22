@@ -1,94 +1,220 @@
-// Configuración de animales con sus imágenes
-// Coloca tus imágenes en la carpeta "images/" con estos nombres exactos
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-const ANIMALS_CONFIG = [
-    {
-        id: 'cat',
-        name: 'Gatito',
-        image: 'images/cat.png',
-        score: 10
-    },
-    {
-        id: 'dog',
-        name: 'Perrito',
-        image: 'images/dog.png',
-        score: 10
-    },
-    {
-        id: 'penguin',
-        name: 'Pingüino',
-        image: 'images/penguin.png',
-        score: 15
-    },
-    {
-        id: 'chick',
-        name: 'Pollito',
-        image: 'images/chick.png',
-        score: 8
-    },
-    {
-        id: 'rabbit',
-        name: 'Conejito',
-        image: 'images/rabbit.png',
-        score: 12
-    },
-    {
-        id: 'panda',
-        name: 'Panda',
-        image: 'images/panda.png',
-        score: 20
-    },
-    {
-        id: 'fox',
-        name: 'Zorrito',
-        image: 'images/fox.png',
-        score: 15
-    },
-    {
-        id: 'koala',
-        name: 'Koala',
-        image: 'images/koala.png',
-        score: 18
-    },
-    {
-        id: 'tiger',
-        name: 'Tigre',
-        image: 'images/tiger.png',
-        score: 25
-    },
-    {
-        id: 'unicorn',
-        name: 'Unicornio',
-        image: 'images/unicorn.png',
-        score: 30
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#game-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+    width: 95%;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.stat {
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#game-area {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: linear-gradient(180deg, #89f7fe 0%, #66a6ff 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 4px solid #fff;
+}
+
+.animal {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    animation: appear 0.3s ease-out;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.3));
+}
+
+.animal:hover {
+    transform: scale(1.2);
+}
+
+.animal:active {
+    transform: scale(0.9);
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
     }
-];
+    to {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
 
-// Configuración de la bomba
-const BOMB_CONFIG = {
-    id: 'bomb',
-    name: 'Bomba',
-    image: 'images/bomb.png',
-    timePenalty: 5
-};
+@keyframes disappear {
+    to {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
 
-// Configuración de niveles
-const LEVELS_CONFIG = {
-    startingTime: 30,
-    timeBonus: 15,
-    startingTarget: 10,
-    targetIncrement: 2,
-    maxLevels: 10,
-    bombProbability: 0.15,  // 15% de probabilidad de bomba
-    spawnRateBase: 800,     // Milisegundos entre spawns
-    spawnRateDecrement: 50  // Reducción por nivel
-};
+.bomb {
+    animation: pulse 0.5s infinite alternate;
+}
 
-// Configuración de colores para variantes (opcional)
-const COLOR_VARIANTS = [
-    { name: 'normal', filter: 'none' },
-    { name: 'golden', filter: 'sepia(1) saturate(3) hue-rotate(20deg)' },
-    { name: 'blue', filter: 'hue-rotate(200deg)' },
-    { name: 'pink', filter: 'hue-rotate(300deg)' },
-    { name: 'green', filter: 'hue-rotate(100deg)' }
-];
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+    }
+    to {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 20px rgba(255, 0, 0, 1));
+    }
+}
+
+#start-screen, #game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    min-width: 400px;
+}
+
+h1 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.hidden {
+    display: none;
+}
+
+#timer-bar {
+    width: 100%;
+    height: 30px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+}
+
+#timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+    transition: width 0.1s linear;
+}
+
+.score-popup {
+    position: absolute;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    animation: scoreFloat 1s ease-out forwards;
+    z-index: 50;
+}
+
+@keyframes scoreFloat {
+    to {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.instructions {
+    text-align: left;
+    margin: 20px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 10px;
+    border: 2px solid #f5a962;
+}
+
+.instructions h3 {
+    color: #d63031;
+    margin-bottom: 10px;
+}
+
+.instructions li {
+    margin: 8px 0;
+    color: #2d3436;
+}
+
+@media (max-width: 600px) {
+    #start-screen, #game-over {
+        min-width: 90%;
+        padding: 20px;
+    }
+    
+    .stat {
+        font-size: 14px;
+    }
+    
+    .animal {
+        width: 70px;
+        height: 70px;
+    }
+}
