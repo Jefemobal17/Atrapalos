@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrapa Animalitos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen">
+            <h1>🐱 Atrapa Animalitos 🐶</h1>
+            <div class="instructions">
+                <h3>📋 Instrucciones:</h3>
+                <ul>
+                    <li>🎯 Haz clic en los animalitos para atraparlos</li>
+                    <li>⏰ Completa cada nivel antes de que se acabe el tiempo</li>
+                    <li>💣 ¡Evita las bombas! Te quitan tiempo</li>
+                    <li>🎮 10 niveles de diversión</li>
+                    <li>⚡ Los animalitos desaparecen rápido, ¡sé veloz!</li>
+                </ul>
+            </div>
+            <button onclick="startGame()">¡Comenzar Juego!</button>
+        </div>
+
+        <div id="game-over" class="hidden">
+            <h1>🎉 ¡Juego Terminado! 🎉</h1>
+            <p style="font-size: 24px; margin: 20px 0;">
+                <span id="final-score"></span>
+            </p>
+            <p style="font-size: 18px; color: #666;">
+                <span id="final-level"></span>
+            </p>
+            <button onclick="startGame()">Jugar de Nuevo</button>
+        </div>
+
+        <div id="header">
+            <div class="stat">🎯 Puntos: <span id="score">0</span></div>
+            <div class="stat">📊 Nivel: <span id="level">1</span></div>
+            <div class="stat">🎪 Meta: <span id="target">10</span></div>
+            <div class="stat">⏱️ Tiempo: <span id="time">30</span>s</div>
+        </div>
+
+        <div id="timer-bar">
+            <div id="timer-fill"></div>
+        </div>
+
+        <div id="game-area"></div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
